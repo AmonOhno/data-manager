@@ -1,0 +1,10 @@
+{
+  "name": "data-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/AmonOhno/data-manager",
+  "author": "AmonOhno <asiangate00815@icloud.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
