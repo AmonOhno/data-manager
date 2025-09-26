@@ -7,13 +7,12 @@ erDiagram
     %% アプリケーションデータ
     %%%% コト（イベント）データ
     events_data ||--|{ access_mst : データアクセスはすべてaccess_idで管理
-    %%%% モノデータ
-    %%%% モノ種類マスタ
-    journal_data ||--|{ subject_mst : 仕訳データ
-    %%%% 仕訳データ
+    %%%% カネデータ
     journal_data ||--|{ access_mst : データアクセスはすべてaccess_idで管理
     journal_accounts_mst ||--|{ journal_data : 仕訳勘定項目
     regular_journal_mst ||--|{ journal_data : 定期取引
+    %%%% モノデータはsubject_mstにて扱うもの対象をカスタマイズできるようにする
+
     user_mst {
         uuid user_id pk
         text user_name "not null"
@@ -46,7 +45,7 @@ erDiagram
     access_mst {
         text access_id pk
         text access_name "not null"
-        text group_id fk "group_mst.grouP_id"
+        text group_id fk "group_mst.group_id"
         boolean permission_read_flg
         boolean permission_update_flg
         boolean invalid_flg
@@ -74,6 +73,7 @@ erDiagram
     subject_mst {
         text subject_id pk
         text subject_name "not null"
+        text access_id fk "access_mst.access_id"
         boolean use_flg
         datetime create_datetime
         text create_user_id
@@ -84,7 +84,6 @@ erDiagram
         text journal_id pk
         text journal_description
         text access_id fk "access_mst.access_id"
-        text subject_id fk "subject_mst.subject_id"
         date journal_date
         text debit_journal_account_id fk "journal_accounts_mst.journal_account_id"
         text credit_journal_account_id fk "journal_accounts_mst.journal_account_id"
@@ -98,7 +97,6 @@ erDiagram
         text journal_account_id pk
         text journal_account_name "not null"
         text access_id fk "access_mst.access_id"
-        text subject_id fk "subject_mst.subject_id"
         text category
         datetime create_datetime
         text create_user_id
@@ -109,7 +107,6 @@ erDiagram
         text regular_journal_id pk
         text regular_journal_name "not null"
         text access_id fk "access_mst.access_id"
-        text subject_id fk "subject_mst.subject_id"
         int frequency
         int day_of_month
         int day_of_weekly
